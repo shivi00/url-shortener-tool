@@ -1,7 +1,7 @@
 const express = require("express");
 const { connectToMongoDB } = require("./connect");
 const urlRoute = require("./routes/url");
-const URL = require("./models/url");
+const {handleperclick} = require("./controllers/url");
 
 const app = express();
 const PORT = 8001;
@@ -14,22 +14,7 @@ app.use(express.json());
 
 app.use("/url", urlRoute);
 
-app.get("/:shortId", async (req, res) => {
-  const shortId = req.params.shortId;
-  const entry = await URL.findOneAndUpdate(
-    {
-      shortId,
-    },
-    {
-      $push: {
-        visitHistory: {
-          timestamp: Date.now(),
-        },
-      },
-    }
-  );
-  res.redirect(entry.redirectURL);
-});
+app.get("/:shortId", handleperclick);
 
 app.listen(PORT, () => console.log(`Server Started at PORT:${PORT}`));
 

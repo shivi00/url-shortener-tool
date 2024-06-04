@@ -24,9 +24,29 @@ async function handleGetAnalytics(req, res) {
   });
 }
 
+async function handleperclick(req,res){
+  const shortId = req.params.shortId;
+  const entry = await URL.findOneAndUpdate(
+    {
+      shortId,
+    },
+    {
+
+      // for pushing the data inside the array
+      $push: {
+        visitHistory: {
+          timestamp: Date.now(),
+        },
+      },
+    }
+  );
+  res.redirect(entry.redirectURL);
+}
+
 module.exports = {
   handleGenerateNewShortURL,
   handleGetAnalytics,
+  handleperclick,
 };
 
 // nano id is used to generate an id of the character.
