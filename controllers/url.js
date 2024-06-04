@@ -32,7 +32,7 @@ async function handleperclick(req,res){
     },
     {
 
-      // for pushing the data inside the array
+      
       $push: {
         visitHistory: {
           timestamp: Date.now(),
@@ -49,4 +49,3 @@ module.exports = {
   handleperclick,
 };
 
-// nano id is used to generate an id of the character.
